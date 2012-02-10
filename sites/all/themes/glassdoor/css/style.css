@@ -6,18 +6,44 @@ body {
    * http://www.markboulton.co.uk/journal/comments/five-simple-steps-to-better-typography */
   font: 13px/1.5em "Helvetica Neue", helvetica, Arial, sans-serif;
   letter-spacing: 0.03em;
+  background: #5394a5;
+  color: #2c727e;
+}
+
+#page {
+  opacity:0.9;
+  filter:alpha(opacity=90); /* For IE8 and earlier */
+}
+
+#content, #header {
+  -moz-border-radius: 6px;
+  -webkit-border-radius: 6px;
+  -khtml-border-radius: 6px;
+  border-radius: 6px;
+}
+
+#header {
+  background: transparent url(/sites/all/themes/glassdoor/logo.png);
+  width: 690px;
+  height: 100px;
+  margin-bottom: 20px;
+  margin-top: 50px;
+}
+
+#content {
+  background: #fff;
 }
 
 /* Links */
 /* line 11, ../sass/style.sass */
 a:link, a:visited {
-  color: blue;
+  color: #ac5116;
   text-decoration: none;
 }
 
 /* line 16, ../sass/style.sass */
 a:hover, a:active {
-  color: red;
+  color: #ac4400;
   text-decoration: underline;
 }
 
@@ -220,7 +246,7 @@ div.status {
 
 /* Region Colors. delete when starting a new theme. */
 /* line 157, ../sass/style.sass */
-#header, #footer {
+#footer {
   background: #efefef;
 }
 
