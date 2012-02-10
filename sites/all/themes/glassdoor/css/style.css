@@ -6,8 +6,12 @@ body {
    * http://www.markboulton.co.uk/journal/comments/five-simple-steps-to-better-typography */
   font: 13px/1.5em "Helvetica Neue", helvetica, Arial, sans-serif;
   letter-spacing: 0.03em;
-  background: #5394a5;
   color: #666;
+  background: #5394a5 url(../images/background_blue.jpg) no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
 }
 
 #page {
@@ -15,7 +19,7 @@ body {
   filter:alpha(opacity=90); /* For IE8 and earlier */
 }
 
-#content, #logo{
+#content, #logo, #navigation, #navigation li a {
   -moz-border-radius: 6px;
   -webkit-border-radius: 6px;
   -khtml-border-radius: 6px;
@@ -270,5 +274,31 @@ div.status {
 
 /* line 166, ../sass/style.sass */
 #navigation {
-  background: #feffa5;
+  background: transparent url(../images/tabs_background.png);
+}
+
+#navigation ul {
+  list-style: none;
+  padding-left: 0px;
+  height: 52px;
+}
+
+#navigation li a {
+  float: left;
+  padding: 6px 24px 8px 24px;
+  font-size: 16px;
+  font-weight: bold;
+  line-height: 32px;
+}
+
+#navigation a:hover {
+  text-decoration: none;
+  background: transparent url(../images/tabs_background.png);
+}
+
+#navigation li a.active {
+  color: #666;
+  background: white;
+  line-height: 34px;
+  margin-bottom: 10px;
 }
