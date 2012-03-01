@@ -4,6 +4,12 @@
 
   <div id="header">
 
+    <?php if ($page['header_menu']): ?>
+      <div id="header-menu-region">
+        <?php print render($page['header_menu']); ?>
+      </div>
+    <?php endif; ?>
+
     <?php if ($logo): ?>
       <a href="<?php print $front_page; ?>" title="<?php print t('Home'); ?>" rel="home" id="logo">
         <img src="<?php print $logo; ?>" alt="<?php print t('Home'); ?>"/>

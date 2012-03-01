@@ -4,7 +4,7 @@ screenshot = images/screenshot.gif
 core = "7.x"
 engine = phptemplate
 
-regions[page_top] = Page top
+regions[header_menu] = Header menu
 regions[header] = Header
 regions[highlight] = Highlight
 regions[help] = Help

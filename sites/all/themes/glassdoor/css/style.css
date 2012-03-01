@@ -19,7 +19,7 @@ body {
   filter:alpha(opacity=90); /* For IE8 and earlier */
 }
 
-#content, #logo, #navigation, #navigation li a {
+#content, #logo, #navigation, #navigation li a, #header-menu-region .block {
   -moz-border-radius: 6px;
   -webkit-border-radius: 6px;
   -khtml-border-radius: 6px;
@@ -28,7 +28,7 @@ body {
 
 #header {
   margin-bottom: 20px;
-  margin-top: 100px;
+  margin-top: 60px;
 }
 
 #logo {
@@ -272,7 +272,54 @@ div.status {
   background: #ffd075;
 }
 
-/* line 166, ../sass/style.sass */
+
+
+#header-menu-region .block {
+  float: right;
+  font-size: 14px;
+  font-weight: bold;
+  background: transparent url(../images/tabs_background.png);
+  line-height: 36px;
+  margin-bottom: 20px;
+  margin-left: 20px;
+  padding: 0px 10px 0px 25px;
+
+}
+
+#header-menu-region .block-title,
+#header-menu-region div,
+#header-menu-region ul,
+#header-menu-region li {
+  display: inline;
+}
+
+#header-menu-region .block-title {
+  font-size: 14px;
+  font-weight: bold;
+  margin-right: 15px;
+}
+
+#header-menu-region .block ul.menu {
+  padding-left: 0px;
+}
+
+
+#header-menu-region .block ul.menu,
+#header-menu-region .block ul.menu li {
+  list-style: none;
+  padding: 0px;
+}
+
+#header-menu-region .block ul.menu li {
+  margin: 0px 15px 0px 0px;
+}
+
+
+#header-menu-region .block ul.menu a {
+  display: inline;
+}
+
+
 #navigation {
   background: transparent url(../images/tabs_background.png);
 }
