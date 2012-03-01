@@ -319,6 +319,15 @@ div.status {
   display: inline;
 }
 
+#block-menu-menu-anon-user {
+  opacity:0.2;
+  filter:alpha(opacity=20); /* For IE8 and earlier */
+}
+#block-menu-menu-anon-user:hover {
+  opacity:1;
+  filter:alpha(opacity=100); /* For IE8 and earlier */
+}
+
 
 #navigation {
   background: transparent url(../images/tabs_background.png);
