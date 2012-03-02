@@ -57,7 +57,7 @@ function missionsocial_members_image_default_styles() {
   $styles['member_logo_teaser'] = array(
     'name' => 'member_logo_teaser',
     'effects' => array(
-      2 => array(
+      1 => array(
         'label' => 'Scale',
         'help' => 'Scaling will maintain the aspect-ratio of the original image. If only a single dimension is specified, the other dimension will be calculated.',
         'effect callback' => 'image_scale_effect',
@@ -68,7 +68,7 @@ function missionsocial_members_image_default_styles() {
         'name' => 'image_scale',
         'data' => array(
           'width' => '200',
-          'height' => '200',
+          'height' => '150',
           'upscale' => 0,
         ),
         'weight' => '1',
