@@ -29,12 +29,6 @@ function missionsocial_member_news_context_default_contexts() {
   $context->reactions = array(
     'block' => array(
       'blocks' => array(
-        'menu-menu-member-news-link' => array(
-          'module' => 'menu',
-          'delta' => 'menu-member-news-link',
-          'region' => 'content',
-          'weight' => '-10',
-        ),
         'views-member_news-block' => array(
           'module' => 'views',
           'delta' => 'member_news-block',
