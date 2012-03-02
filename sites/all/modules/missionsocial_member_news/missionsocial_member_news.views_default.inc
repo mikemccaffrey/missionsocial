@@ -39,7 +39,7 @@ function missionsocial_member_news_views_default_views() {
   $handler->display->display_options['header']['area']['table'] = 'views';
   $handler->display->display_options['header']['area']['field'] = 'area';
   $handler->display->display_options['header']['area']['empty'] = FALSE;
-  $handler->display->display_options['header']['area']['content'] = '<?php if(og_user_access_by_entity(\'administer group\', \'node\', arg(1))) print l("Add a news item", "node/add/member-news", array("class" => "add-link")); ?>
+  $handler->display->display_options['header']['area']['content'] = '<?php if(og_user_access_by_entity(\'administer group\', \'node\', arg(1))) print l("Add a news item", "node/add/member-news", array("attributes" => array("class" => "add-link"))); ?>
 <h2>Recent news</h2>';
   $handler->display->display_options['header']['area']['format'] = 'php_code';
   $handler->display->display_options['header']['area']['tokenize'] = 0;
@@ -49,7 +49,7 @@ function missionsocial_member_news_views_default_views() {
   $handler->display->display_options['empty']['area']['field'] = 'area';
   $handler->display->display_options['empty']['area']['label'] = 'Add link';
   $handler->display->display_options['empty']['area']['empty'] = FALSE;
-  $handler->display->display_options['empty']['area']['content'] = '<?php if(og_user_access_by_entity(\'administer group\', \'node\', arg(1))) print l("Add a news item", "node/add/member-news", array("class" => "add-link")); ?>';
+  $handler->display->display_options['empty']['area']['content'] = '<?php if(og_user_access_by_entity(\'administer group\', \'node\', arg(1))) print l("Add a news item", "node/add/member-news", array("attributes" => array("class" => "add-link"))); ?>';
   $handler->display->display_options['empty']['area']['format'] = 'php_code';
   $handler->display->display_options['empty']['area']['tokenize'] = 0;
   /* Relationship: Group membership: Node group membership */

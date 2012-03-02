@@ -25,6 +25,7 @@ body {
 #navigation li a, 
 #header-menu-region .block,
 ul.primary li a,
+.add-link,
 button,
 input[type="button"],
 input[type="submit"] {
@@ -409,6 +410,9 @@ ul.primary li a span {
   top: -1px;
 }
 
+.add-link {
+  float: right;
+}
 
 select,
 input[type="text"],
@@ -419,6 +423,7 @@ textarea {
 }
 
 
+.add-link,
 button,
 input[type="button"],
 input[type="submit"] {
@@ -429,10 +434,12 @@ input[type="submit"] {
   color: #666;
 }
 
+.add-link:hover,
 button:hover,
 input[type="button"]:hover,
 input[type="submit"]:hover {
   background: #f0f0f0;
+  text-decoration: none;
 }
 
 .form-managed-file .form-file, .form-managed-file .form-submit {
