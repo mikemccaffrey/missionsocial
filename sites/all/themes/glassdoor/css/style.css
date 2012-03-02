@@ -458,3 +458,8 @@ fieldset {
   border: 1px solid #ccc;
   padding: 0px 15px 10px 15px;
 }
+
+.submitted {
+  margin-bottom: 5px;
+  font-style: italic;
+}

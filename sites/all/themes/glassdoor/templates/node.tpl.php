@@ -8,7 +8,7 @@
     <?php print $user_picture; ?>
 		    
     <?php if ($display_submitted): ?>
-      <span class="submitted"><?php print $date; ?> — <?php print $name; ?></span>
+      <div class="submitted">Posted on <?php print $date; ?> by <?php print $name; ?></div>
     <?php endif; ?>
 
   	<div class="content">
