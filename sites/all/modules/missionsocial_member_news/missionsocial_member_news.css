@@ -1,0 +1,12 @@
+
+#block-views-member_news-block {
+  margin-top: 10px;
+}
+
+#block-views-member_news-block .add-link {
+  margin-top: -5px;
+}
+
+#block-views-member_news-block .node h2 {
+  font-size: 18px;
+}
