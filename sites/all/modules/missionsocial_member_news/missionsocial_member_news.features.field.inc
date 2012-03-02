@@ -49,7 +49,7 @@ function missionsocial_member_news_field_default_fields() {
           'module' => 'text',
           'settings' => array(),
           'type' => 'text_default',
-          'weight' => '0',
+          'weight' => '1',
         ),
         'teaser' => array(
           'label' => 'hidden',
@@ -116,10 +116,11 @@ function missionsocial_member_news_field_default_fields() {
       'description' => '',
       'display' => array(
         'default' => array(
-          'label' => 'above',
+          'label' => 'inline',
+          'module' => 'og',
           'settings' => array(),
-          'type' => 'hidden',
-          'weight' => '1',
+          'type' => 'og_list_default',
+          'weight' => '0',
         ),
         'teaser' => array(
           'label' => 'above',
@@ -130,8 +131,8 @@ function missionsocial_member_news_field_default_fields() {
       ),
       'entity_type' => 'node',
       'field_name' => 'group_audience',
-      'label' => 'Groups audience',
-      'required' => FALSE,
+      'label' => 'Organization',
+      'required' => 0,
       'settings' => array(
         'user_register_form' => FALSE,
       ),
@@ -148,6 +149,7 @@ function missionsocial_member_news_field_default_fields() {
         ),
       ),
       'widget' => array(
+        'active' => 1,
         'module' => 'og',
         'settings' => array(
           'opt_group' => 'auto',
@@ -162,7 +164,7 @@ function missionsocial_member_news_field_default_fields() {
   // Translatables
   // Included for use with string extractors like potx.
   t('Body');
-  t('Groups audience');
+  t('Organization');
 
   return $fields;
 }
