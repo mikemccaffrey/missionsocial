@@ -49,7 +49,7 @@ function missionsocial_members_field_default_fields() {
           'module' => 'text',
           'settings' => array(),
           'type' => 'text_default',
-          'weight' => '1',
+          'weight' => '2',
         ),
         'teaser' => array(
           'label' => 'hidden',
@@ -58,7 +58,7 @@ function missionsocial_members_field_default_fields() {
             'trim_length' => 600,
           ),
           'type' => 'text_summary_or_trimmed',
-          'weight' => '1',
+          'weight' => '2',
         ),
       ),
       'entity_type' => 'node',
@@ -77,7 +77,7 @@ function missionsocial_members_field_default_fields() {
           'summary_rows' => 5,
         ),
         'type' => 'text_textarea_with_summary',
-        'weight' => '2',
+        'weight' => '3',
       ),
     ),
   );
@@ -124,7 +124,7 @@ function missionsocial_members_field_default_fields() {
             'image_style' => '',
           ),
           'type' => 'image',
-          'weight' => '0',
+          'weight' => '1',
         ),
         'teaser' => array(
           'label' => 'hidden',
@@ -134,7 +134,7 @@ function missionsocial_members_field_default_fields() {
             'image_style' => 'member_logo_teaser',
           ),
           'type' => 'image',
-          'weight' => '0',
+          'weight' => '1',
         ),
       ),
       'entity_type' => 'node',
@@ -159,6 +159,89 @@ function missionsocial_members_field_default_fields() {
           'progress_indicator' => 'throbber',
         ),
         'type' => 'image_image',
+        'weight' => '2',
+      ),
+    ),
+  );
+
+  // Exported field: 'node-member-field_member_url'
+  $fields['node-member-field_member_url'] = array(
+    'field_config' => array(
+      'active' => '1',
+      'cardinality' => '1',
+      'deleted' => '0',
+      'entity_types' => array(),
+      'field_name' => 'field_member_url',
+      'foreign keys' => array(),
+      'indexes' => array(),
+      'module' => 'link',
+      'settings' => array(
+        'attributes' => array(
+          'class' => '',
+          'rel' => '',
+          'target' => 'default',
+        ),
+        'display' => array(
+          'url_cutoff' => 80,
+        ),
+        'enable_tokens' => 1,
+        'title' => 'optional',
+        'title_maxlength' => 128,
+        'title_value' => '',
+        'url' => 0,
+      ),
+      'translatable' => '0',
+      'type' => 'link_field',
+    ),
+    'field_instance' => array(
+      'bundle' => 'member',
+      'default_value' => NULL,
+      'deleted' => '0',
+      'description' => '',
+      'display' => array(
+        'default' => array(
+          'label' => 'hidden',
+          'module' => 'link',
+          'settings' => array(),
+          'type' => 'link_url',
+          'weight' => '0',
+        ),
+        'teaser' => array(
+          'label' => 'hidden',
+          'module' => 'link',
+          'settings' => array(),
+          'type' => 'link_url',
+          'weight' => '0',
+        ),
+      ),
+      'entity_type' => 'node',
+      'field_name' => 'field_member_url',
+      'label' => 'Organization URL',
+      'required' => 0,
+      'settings' => array(
+        'attributes' => array(
+          'class' => '',
+          'configurable_title' => 0,
+          'rel' => '',
+          'target' => '_blank',
+          'title' => '',
+        ),
+        'display' => array(
+          'url_cutoff' => '80',
+        ),
+        'enable_tokens' => 0,
+        'title' => 'none',
+        'title_maxlength' => '128',
+        'title_value' => '',
+        'url' => 0,
+        'user_register_form' => FALSE,
+        'validate_url' => 1,
+      ),
+      'widget' => array(
+        'active' => 0,
+        'module' => 'link',
+        'settings' => array(),
+        'type' => 'link_field',
         'weight' => '1',
       ),
     ),
@@ -168,6 +251,7 @@ function missionsocial_members_field_default_fields() {
   // Included for use with string extractors like potx.
   t('Body');
   t('Logo');
+  t('Organization URL');
 
   return $fields;
 }
