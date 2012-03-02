@@ -1,1 +1,32 @@
  
+
+
+.node-member .field-name-field-member-logo {
+  float: right;
+  clear: right;
+  margin: 0px 15px 0px 15px;
+}
+
+.field-name-field-member-url { 
+  font-weight: bold;
+  margin-bottom: 1em;
+}
+
+
+
+.view-members .node {
+  clear: left;
+}
+
+.view-members h2,
+.view-members .field-name-body,
+.view-members .field-name-field-member-url {
+  margin-left: 230px;
+}
+
+.view-members .field-name-field-member-logo {
+  float: left;
+  width: 200px;
+  text-align: center;
+  margin: -33px 0px 15px 0px;
+}
