@@ -25,27 +25,14 @@ define('OG_MIGRATE_FAILED', 2);
  */
 function og_migrate_menu() {
   $items['admin/config/group/group-migrate'] = array(
-    'title' => 'Organic groups migrate',
-    'description' => 'Migrate Organic groups data.',
+    'title' => 'OG migrate',
+    'description' => 'Migrate OG data.',
     'page callback' => 'drupal_get_form',
     'page arguments' => array('og_migrate_admin'),
     'access arguments' => array('access administration pages'),
   );
 
   return $items;
-}
-
-/**
- * Implements hook_ctools_plugin_directory().
- */
-function og_migrate_ctools_plugin_directory($module, $type) {
-  // Safety: go away if CTools is not at an appropriate version.
-  if (!module_invoke('ctools', 'api_version', OG_MIGRATE_REQUIRED_CTOOLS_API)) {
-    return;
-  }
-  if ($module == 'og_migrate' && $type == 'og_migrate') {
-    return 'plugins/og_migrate';
-  }
 }
 
 /**
@@ -63,19 +50,16 @@ function og_migrate_ctools_plugin_type() {
  * Implements hook_init().
  */
 function og_migrate_init() {
+  og_migrate_register_plugins();
   $item = menu_get_item();
   if ($item['path'] == 'batch') {
-   // Load all the plugins, so it will work in the batch.
-   og_migrate_get_plugins();
+    // Load all the plugins, so it will work in the batch.
+    og_migrate_get_plugins();
   }
-  elseif ((!og_needs_migrate() || !og_migrate_register_plugins())
-    && user_access('access administration pages') && flood_is_allowed('og_migrate_warning', 1)) {
-    flood_register_event('og_migrate_warning');
+  elseif (!og_migrate_is_pending() && user_access('access administration pages')) {
     og_needs_migrate(FALSE);
     drupal_set_message(t('There are no pending migration plugins that need to be executed. You can disable Organic groups migrate module.'));
   }
-
-  og_migrate_register_plugins();
 }
 
 /**
@@ -199,7 +183,7 @@ function og_migrate_write_record($name, $status = OG_MIGRATE_EXECUTED) {
   // Delete the previous record.
   db_delete('og_migrate')
     ->condition('plugin', $name)
-        ->execute();
+    ->execute();
 
   // Insert the record.
   $object = new stdClass();
@@ -216,6 +200,9 @@ function og_migrate_process(&$plugin, $info) {
   $plugin += array(
     'description' => '',
     'access callback' => TRUE,
+    // TODO: Although we have a file, for some reason PHP gives a notice, unless
+    // we check for empty() values.
+    'migrate callback' => !empty($plugin['file']) ? str_replace('.inc', '', $plugin['file']) : '',
   );
 }
 
@@ -288,7 +275,37 @@ function og_migrate_is_pending() {
  */
 function og_migrate_7000_access() {
   return db_table_exists('d6_og');
+}
 
+/**
+ * Access callback for og_update_7200() related migration items.
+ */
+function og_migrate_7200_access() {
+  return db_field_exists('og_membership', 'group_type') && db_table_exists('og');
+}
+
+/**
+ * Access callback for OGUR related migration items.
+ */
+function og_migrate_ogur_access() {
+  return db_table_exists('d6_og_users_roles');
+}
+
+/**
+ * Get the entity type and entity ID from the deprecated OG table.
+ *
+ * @param $gid
+ *   The deprecated group ID.
+ */
+function og_migrate_get_group($gid) {
+  // Get the entity that is the group.
+  $result = db_select('og', 'og')
+    ->fields('og', array('entity_type', 'etid'))
+    ->condition('gid', $gid, '=')
+    ->execute()
+    ->fetchAssoc();
+
+  return !empty($result) ? array_values($result) : FALSE;
 }
 
 /**
@@ -358,16 +375,30 @@ function og_migrate_admin_submit($form, &$form_state) {
  * Helper function to create a batch.
  */
 function og_migrate_batch($plugins_name) {
-  $plugins_name = og_migrate_get_plugins_dependencies($plugins_name);
+  $all_plugins_name = og_migrate_get_plugins_dependencies($plugins_name);
 
   if (!$plugins_name) {
     return;
   }
 
+  $query = db_select('og_migrate', 'ogm');
+  $result = $query->fields('ogm', array('plugin', 'status'))
+    ->execute()
+    ->fetchAll();
+
+  $status = array();
+  foreach ($result as $row) {
+    $status[$row->plugin] = $row->status;
+  }
+
   // Add the operations.
   $plugins = og_migrate_get_plugins();
-  foreach ($plugins_name as $plugin_name) {
-    $operations[] = array($plugins[$plugin_name]['migrate callback'], array());
+  foreach ($all_plugins_name as $plugin_name) {
+    if (in_array($plugin_name, $plugins_name) || empty($status[$plugin_name]) || $status[$plugin_name] != OG_MIGRATE_EXECUTED) {
+      // Plugin was explicetly selected, or not executed successfuly yet.
+      $operations[] = array($plugins[$plugin_name]['migrate callback'], array());
+    }
+
   }
 
   $batch = array(
@@ -391,6 +422,7 @@ function og_migrate_batch($plugins_name) {
  * Helper function to help upgrade form Drupal 6.
  */
 function og_migrate_create_fields() {
+  og_create_field(OG_AUDIENCE_FIELD, 'user', 'user');
   foreach (node_type_get_types() as $type) {
     // check if the variable exists.
     if ($type_usage = variable_get('og_content_type_usage_' . $type->type)) {
@@ -412,7 +444,6 @@ function og_migrate_create_fields() {
   }
 
   if ($content_type) {
-
     // Add group and group content fields to content types.
     $fields = array(
       'group' => OG_GROUP_FIELD,

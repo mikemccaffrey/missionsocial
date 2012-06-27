@@ -2,14 +2,18 @@ name = Organic groups UI
 description = "Organic groups UI."
 package = "Organic groups"
 dependencies[] = og
+dependencies[] = views_bulk_operations
 core = 7.x
 version = VERSION
 files[] = og_ui.test
 configure = admin/config/group
 
-; Information added by drupal.org packaging script on 2011-10-28
-version = "7.x-1.3"
+; Views handlers
+files[] = includes/views/handlers/og_ui_handler_area_og_membership_overview.inc
+
+; Information added by drupal.org packaging script on 2012-06-25
+version = "7.x-2.0-alpha3+14-dev"
 core = "7.x"
 project = "og"
-datestamp = "1319808636"
+datestamp = "1340627497"
 
