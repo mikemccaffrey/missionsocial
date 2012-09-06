@@ -95,7 +95,7 @@ h1 {
 h2 {
   font-size: 1.8em;
   font-weight: 300;
-  margin-bottom: 0.4em;
+  margin-bottom: .7em;
 }
 
 /* line 42, ../sass/style.sass */
@@ -107,7 +107,7 @@ h3 {
 /* line 46, ../sass/style.sass */
 h4 {
   font-size: 1.2em;
-  margin-bottom: 0.8em;
+  margin-bottom: 1em;
 }
 
 /* line 50, ../sass/style.sass */
@@ -462,4 +462,8 @@ fieldset {
 .submitted {
   margin-bottom: 5px;
   font-style: italic;
+}
+
+.field-name-field-page-image {
+  margin-bottom: 1em;
 }
