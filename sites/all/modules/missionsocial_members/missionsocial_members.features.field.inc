@@ -10,7 +10,7 @@
 function missionsocial_members_field_default_fields() {
   $fields = array();
 
-  // Exported field: 'node-member-body'
+  // Exported field: 'node-member-body'.
   $fields['node-member-body'] = array(
     'field_config' => array(
       'active' => '1',
@@ -33,6 +33,7 @@ function missionsocial_members_field_default_fields() {
           0 => 'format',
         ),
       ),
+      'locked' => '0',
       'module' => 'text',
       'settings' => array(),
       'translatable' => '0',
@@ -82,7 +83,7 @@ function missionsocial_members_field_default_fields() {
     ),
   );
 
-  // Exported field: 'node-member-field_member_logo'
+  // Exported field: 'node-member-field_member_logo'.
   $fields['node-member-field_member_logo'] = array(
     'field_config' => array(
       'active' => '1',
@@ -103,6 +104,7 @@ function missionsocial_members_field_default_fields() {
           0 => 'fid',
         ),
       ),
+      'locked' => '0',
       'module' => 'image',
       'settings' => array(
         'default_image' => 0,
@@ -143,6 +145,7 @@ function missionsocial_members_field_default_fields() {
       'required' => 0,
       'settings' => array(
         'alt_field' => 0,
+        'default_image' => 0,
         'file_directory' => '',
         'file_extensions' => 'png gif jpg jpeg',
         'max_filesize' => '',
@@ -164,7 +167,7 @@ function missionsocial_members_field_default_fields() {
     ),
   );
 
-  // Exported field: 'node-member-field_member_url'
+  // Exported field: 'node-member-field_member_url'.
   $fields['node-member-field_member_url'] = array(
     'field_config' => array(
       'active' => '1',
@@ -174,6 +177,7 @@ function missionsocial_members_field_default_fields() {
       'field_name' => 'field_member_url',
       'foreign keys' => array(),
       'indexes' => array(),
+      'locked' => '0',
       'module' => 'link',
       'settings' => array(
         'attributes' => array(
@@ -247,7 +251,7 @@ function missionsocial_members_field_default_fields() {
     ),
   );
 
-  // Exported field: 'node-member-group_group'
+  // Exported field: 'node-member-group_group'.
   $fields['node-member-group_group'] = array(
     'field_config' => array(
       'active' => '1',
@@ -261,6 +265,7 @@ function missionsocial_members_field_default_fields() {
           0 => 'value',
         ),
       ),
+      'locked' => '0',
       'module' => 'list',
       'no_ui' => TRUE,
       'settings' => array(

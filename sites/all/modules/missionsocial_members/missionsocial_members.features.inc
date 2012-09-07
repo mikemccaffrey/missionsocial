@@ -18,10 +18,7 @@ function missionsocial_members_ctools_plugin_api() {
  * Implements hook_views_api().
  */
 function missionsocial_members_views_api() {
-  list($module, $api) = func_get_args();
-  if ($module == "views" && $api == "views_default") {
-    return array("version" => "3.0");
-  }
+  return array("version" => "3.0");
 }
 
 /**
@@ -30,7 +27,7 @@ function missionsocial_members_views_api() {
 function missionsocial_members_image_default_styles() {
   $styles = array();
 
-  // Exported image style: member_logo_body
+  // Exported image style: member_logo_body.
   $styles['member_logo_body'] = array(
     'name' => 'member_logo_body',
     'effects' => array(
@@ -53,7 +50,7 @@ function missionsocial_members_image_default_styles() {
     ),
   );
 
-  // Exported image style: member_logo_teaser
+  // Exported image style: member_logo_teaser.
   $styles['member_logo_teaser'] = array(
     'name' => 'member_logo_teaser',
     'effects' => array(
