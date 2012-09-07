@@ -62,11 +62,9 @@
               <div id="highlight"><?php print render($page['highlight']) ?></div>
             <?php endif; ?>
 
-            <!--
-            <?php if ($title): ?>
-              <h1 class="title"><?php print $title; ?></h1>
+            <?php if ($title && !isset($node->type)): ?>
+              <h2 class="title"><?php print $title; ?></h2  >
             <?php endif; ?>
-            -->
 
             <?php print $messages; ?>
             <?php print render($page['help']); ?>

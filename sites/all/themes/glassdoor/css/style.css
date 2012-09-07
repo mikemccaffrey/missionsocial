@@ -134,6 +134,7 @@ p {
 ul, ol {
   margin-left: 0;
   padding-left: 2em;
+  margin: 0 0 1em 0;
 }
 
 /* Table styles. */
