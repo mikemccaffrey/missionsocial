@@ -20,6 +20,7 @@ body {
 }
 
 #content, 
+#footer,
 #logo, 
 #navigation, 
 #navigation li a, 
@@ -269,7 +270,10 @@ div.status {
 /* Region Colors. delete when starting a new theme. */
 /* line 157, ../sass/style.sass */
 #footer {
-  background: #efefef;
+  background: #fff;
+  padding: 25px;
+  margin-top: 25px;
+  margin-bottom: 50px;
 }
 
 /* line 160, ../sass/style.sass */
