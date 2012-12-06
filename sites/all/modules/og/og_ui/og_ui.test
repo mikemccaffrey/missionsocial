@@ -245,39 +245,26 @@ class OgUiManagePeopleTestCase extends DrupalWebTestCase {
     $wrapper->{OG_GROUP_FIELD}->set(1);
     $wrapper->save();
 
-    $og_membership = og_get_membership('entity_test', $entity->pid, 'user', $user1->uid);
-
-    // Add users to the group, with different states.
+    // Add user2 to the group.
     $user2 = $this->drupalCreateUser();
-    foreach (og_group_content_states() as $state => $name) {
-      $edit = array();
-      $edit['name'] = $user2->name;
-      $edit['state'] = $state;
-      $this->drupalPost('group/entity_test/' . $entity->pid . '/admin/people/add-user', $edit, t('Add users'));
+    $this->assertFalse(og_is_member('entity_test', $entity->pid, 'user', $user2), 'User is not a group member');
+    $edit = array();
+    $edit['name'] = $user2->name;
+    $this->drupalPost('group/entity_test/' . $entity->pid . '/admin/people/add-user', $edit, t('Add users'));
 
-      // Reload user, just to make sure field was updated.
-      $user2 = user_load($user2->uid, TRUE);
-      og_membership_invalidate_cache();
-      $og_membership = og_get_membership('entity_test', $entity->pid, 'user', $user2->uid);
-      $this->assertTrue(og_is_member('entity_test', $entity->pid, 'user', $user2, array($state)), t('User was added to the group with @name state.', array('@name' => $name)));
+    // Reload user.
+  og_membership_invalidate_cache();
+    $this->assertTrue(og_is_member('entity_test', $entity->pid, 'user', $user2), 'User was added to the group.');
 
-      // Unsubscribe from group.
-      og_ungroup('entity_test', $entity->pid, 'user', $user2);
-    }
+    // Add the same user twice.
+    $this->drupalPost('group/entity_test/' . $entity->pid . '/admin/people/add-user', $edit, t('Add users'));
+    $this->assertText(t('User @name is already subscribed to group.', array('@name' => format_username($user2))), 'User can not be added twice.');
 
     // Add non-existing user.
     $edit = array();
     $edit['name'] = $this->randomName();
     $this->drupalPost('group/entity_test/' . $entity->pid . '/admin/people/add-user', $edit, t('Add users'));
     $this->assertText(t('You have entered an invalid user name.'), t('Invalid user name not added to group.'));
-
-    // Add the same user twice.
-    $edit = array();
-    $edit['name'] = $user2->name;
-    $edit['state'] = $state;
-    $this->drupalPost('group/entity_test/' . $entity->pid . '/admin/people/add-user', $edit, t('Add users'));
-    $this->drupalPost('group/entity_test/' . $entity->pid . '/admin/people/add-user', $edit, t('Add users'));
-    $this->assertText(t('User @name is already subscribed to group.', array('@name' => format_username($user2))), t('User can not be added twice.'));
   }
 }
 
@@ -292,6 +279,7 @@ class OgUiMigrate7000TestCase extends UpgradePathTestCase {
       'name'  => 'OG UI upgrade path',
       'description'  => 'Tests the upgrade path of Organic groups UI.',
       'group' => 'Organic groups UI',
+      'dependencies' => array('migrate'),
     );
   }
 
@@ -301,37 +289,30 @@ class OgUiMigrate7000TestCase extends UpgradePathTestCase {
       drupal_get_path('module', 'og_ui') . '/tests/drupal-6.og-ui.database.php',
     );
     parent::setUp();
-    $this->performUpgrade();
+    $this->assertTrue($this->performUpgrade(), 'The upgrade was completed successfully.');
 
-    // Drupal doesn't rebuild the registery properly, so we have to
-    // manually include all the classes.
-    module_load_include('inc', 'entity' ,'entity.info');
-    module_load_include('inc', 'entity' ,'includes/entity');
-    module_load_include('inc', 'entity' ,'includes/entity.controller');
-    module_load_include('inc', 'entity' ,'includes/entity.wrapper');
+    // spl_autoload_register() wasn't called, so we do it here, to allow
+    // classes to be auto-loaded.
+    spl_autoload_register('drupal_autoload_class');
+    spl_autoload_register('drupal_autoload_interface');
 
-    module_load_include('inc', 'og' ,'og.info');
-    module_load_include('inc', 'og' ,'includes/og.exception');
-    module_load_include('inc', 'og' ,'includes/og.membership');
-    module_load_include('inc', 'og' ,'includes/og.membership_type');
+    module_enable(array('og_ui', 'migrate'));
 
-    module_enable(array('og_migrate', 'og_ui'));
+    Migration::registerMigration('OgMigrateAddFields');
+    Migration::registerMigration('OgUiMigrateAddField');
+    Migration::registerMigration('OgUiSetRoles');
 
-    // Set small batch size, so we can simulate upgrade with many records.
-    variable_set('og_update_batch_size', 3);
+    foreach (migrate_migrations() as $migration) {
+      $machine_name = $migration->getMachineName();
+      $result = $migration->processImport();
+      $this->assertEqual($result, Migration::RESULT_COMPLETED, format_string('Migration @name executed.', array('@name' => $machine_name)));
+    }
   }
 
   /**
    * Test a successful upgrade.
    */
-  public function testOgUiUpgrade() {
-    // Run the required migration.
-    $edit = array(
-      'migrate[og_7000_group]' => TRUE,
-      'migrate[og_ui_7000_group_visibility]' => TRUE,
-    );
-    $this->drupalPost('admin/config/group/group-migrate', $edit, t('Migrate'));
-
+  public function testUpgrade() {
     // Assert according to the scenario Drupal 6's test table dump was created.
     $nodes_info = array(
       // Open group.
@@ -373,8 +354,6 @@ class OgUiMigrate7000TestCase extends UpgradePathTestCase {
       // Set default values.
       $node_info += array('auth' => array('unsubscribe' => TRUE));
 
-      // TODO: There is some issue with og_is_group_default_access()
-      // returning a wrong result, due to $wrapper not being up-to-date.
       $og_roles = og_roles('node', 'test_group', $nid, TRUE);
       $permissions = og_role_permissions($og_roles);
 

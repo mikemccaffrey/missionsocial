@@ -1,20 +1,16 @@
 <?php
 
-
 /**
  * @file
- * Test module for Organic groups.
+ * Test module for OG.
  */
 
 /**
- * Implements hook_default_og_membership_type().
+ * Implements hook_node_presave().
  */
-function og_test_default_og_membership_type() {
-  $items = array();
-  $items['expire'] = entity_import('og_membership_type', '{
-    "name" : "expire",
-    "description" : "Expire",
-    "rdf_mapping" : []
-  }');
-  return $items;
+function og_node_presave($node) {
+  if (!empty($node->nid) && !empty($node->og_group_on_save)) {
+    $values = $node->og_group_on_save;
+    og_group($values['group_type'], $values['gid'], array('entity_type' => 'node', 'entity' => $node));
+  }
 }
