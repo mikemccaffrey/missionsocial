@@ -469,6 +469,11 @@ fieldset {
   font-style: italic;
 }
 
-.field-name-field-page-image {
+.field-name-field-page-image .field-item {
   margin-bottom: 1em;
+}
+
+.page-image-caption {
+  text-align: right;
+  font-style: italic;
 }
