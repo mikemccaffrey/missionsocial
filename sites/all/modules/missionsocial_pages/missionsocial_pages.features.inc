@@ -20,11 +20,11 @@ function missionsocial_pages_ctools_plugin_api() {
 function missionsocial_pages_image_default_styles() {
   $styles = array();
 
-  // Exported image style: page_width
+  // Exported image style: page_width.
   $styles['page_width'] = array(
     'name' => 'page_width',
     'effects' => array(
-      1 => array(
+      3 => array(
         'label' => 'Scale',
         'help' => 'Scaling will maintain the aspect-ratio of the original image. If only a single dimension is specified, the other dimension will be calculated.',
         'effect callback' => 'image_scale_effect',
@@ -35,10 +35,26 @@ function missionsocial_pages_image_default_styles() {
         'name' => 'image_scale',
         'data' => array(
           'width' => '640',
-          'height' => '640',
+          'height' => '',
           'upscale' => 0,
         ),
-        'weight' => '1',
+        'weight' => '-10',
+      ),
+      4 => array(
+        'label' => 'Crop',
+        'help' => 'Cropping will remove portions of an image to make it the specified dimensions.',
+        'effect callback' => 'image_crop_effect',
+        'dimensions callback' => 'image_resize_dimensions',
+        'form callback' => 'image_crop_form',
+        'summary theme' => 'image_crop_summary',
+        'module' => 'image',
+        'name' => 'image_crop',
+        'data' => array(
+          'width' => '640',
+          'height' => '303',
+          'anchor' => 'center-center',
+        ),
+        'weight' => '-9',
       ),
     ),
   );
